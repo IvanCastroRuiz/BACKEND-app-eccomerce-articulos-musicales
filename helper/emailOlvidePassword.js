@@ -13,7 +13,7 @@ const emailOlvidePassword = async (datos) => {
     const { email, nombre, token } = datos;    
     // Enviar el email
     const info = await transport.sendMail({
-      from: "APV - Administrador de Pacientes de Veterionaria",
+      from: "AEC - Administrador de ECommerce Articulos",
       to: email,
       subject: 'Reestablece tu password',
       text: 'Reestablece tu password',
@@ -26,7 +26,7 @@ const emailOlvidePassword = async (datos) => {
                `
     });
 
-    console.log("Mensaje enviado: %s", info.messageId);
+    // console.log("Mensaje enviado: %s", info.messageId);
 
 };
 

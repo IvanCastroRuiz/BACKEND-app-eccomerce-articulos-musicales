@@ -2,7 +2,7 @@ import Usuario from "../models/Usuario.js";
 import generarJWT from "../helper/generarJWT.js";
 import generarId from "../helper/generarId.js";
 import emailRegistro from "../helper/emailRegistro.js";
-//import emailOlvidePassword from "../helper/emailOlvidePassword.js";
+import emailOlvidePassword from "../helper/emailOlvidePassword.js";
 
 const registrar = async (req, res)=>{
 
@@ -66,6 +66,7 @@ const confirmar = async (req, res)=>{
     // console.log(token);
     if(!usuarioConfirmar){
         const error = new Error("Token no valido");
+        // console.log("Token no valido");
         return res.status(404).json({msg: error.message});
     };
 
@@ -76,6 +77,7 @@ const confirmar = async (req, res)=>{
         res.json({
             msg: "Usuario confirmado correctamente"
         });
+        // console.log("Usuario confirmado correctamente");
     } catch (error) {
         console.error(error.message);    
     }
@@ -98,7 +100,7 @@ const auntenticar = async (req, res)=>{
         return res.status(403).json({msg: error.message});
     }
 
-    // Aumtemticar el usuario
+    // Autenticar el usuario
     // Revisar el password si es correcto
     if( await usuario.comprobarPassword(password)){
 
@@ -134,11 +136,11 @@ const olvidePassword = async (req, res) =>{
         await existeUsuario.save();
 
         // Enviar email con Instrucciones
-        // emailOlvidePassword({
-        //     email,
-        //     nombre: existeUsuario.nombre,
-        //     token: existeUsuario.token
-        // });
+        emailOlvidePassword({
+            email,
+            nombre: existeUsuario.nombre,
+            token: existeUsuario.token
+        });
 
         res.json({msg: "Hemos enviado un email con las instrucciones"});    
 
