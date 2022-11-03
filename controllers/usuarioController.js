@@ -44,6 +44,7 @@ const perfil = (req, res)=>{
 
     const { usuario } = req;
     try{
+
         res.status(200).json({
             usuario
         });
@@ -205,7 +206,7 @@ const usuarioRegistrados = async (req, res) =>{
     // console.log(usuarios);
 };
 
-const actualizarUsuario = async (req, res) => {
+const actualizarPerfil = async (req, res) => {
     const { id } = req.params;
     const usuario = await Usuario.findById(id);
   
@@ -233,6 +234,31 @@ const actualizarUsuario = async (req, res) => {
     }
 };
 
+const actualizarPassword = async (req, res) => {
+    // Leer los datos
+    const { id } = req.usuario;
+    const { pwd_actual, pwd_nuevo } = req.body;
+  
+    // Comprobar que el veterinario existe
+    const usuario = await Usuario.findById(id);
+    if (!usuario) {
+      const error = new Error("Hubo un error");
+      return res.status(400).json({ msg: error.message });
+    }
+  
+    // Comprobar su password
+    if (await usuario.comprobarPassword(pwd_actual)) {
+      // Almacenar el nuevo password
+  
+      usuario.password = pwd_nuevo;
+      await usuario.save();
+      res.json({ msg: "Password Almacenado Correctamente" });
+    } else {
+      const error = new Error("El Password Actual es Incorrecto");
+      return res.status(400).json({ msg: error.message });
+    }
+  };
+
 export {
     registrar,
     perfil,
@@ -242,5 +268,6 @@ export {
     comprobarToken,
     nuevoPassword,
     usuarioRegistrados,
-    actualizarUsuario
+    actualizarPerfil,
+    actualizarPassword
 };
