@@ -5,8 +5,9 @@ const emailRegistro = async (datos) => {
         host: process.env.EMAIL_HOST,
         port: process.env.EMAIL_PORT,
         auth: {
+          type: "OAuth2",
           user: process.env.EMAIL_USER,
-          pass: process.env.EMAIL_PASS
+          pass: process.env.EMAIL_PASS,
         }
     });
 
