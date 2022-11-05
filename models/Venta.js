@@ -1,7 +1,5 @@
 import mongoose from 'mongoose';
 
-
-
 const ventaShema = mongoose.Schema(
     {
 
