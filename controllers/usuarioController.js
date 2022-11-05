@@ -43,6 +43,7 @@ const perfil = (req, res)=>{
     //console.log(req.usuario);
 
     const { usuario } = req;
+
     try{
 
         res.status(200).json({
@@ -109,6 +110,7 @@ const auntenticar = async (req, res)=>{
         // https://jwt.io/
 
         res.json({ 
+            usuario,
             token: generarJWT(usuario._id),
             msg: "Usuario auntenticado"    
         });
